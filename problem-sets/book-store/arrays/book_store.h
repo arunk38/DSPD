@@ -9,8 +9,8 @@
  */
 
 typedef struct {
-	int		year;				/* Year of publication */
-	char	name[SIZE];			/* Name of the book */
+	int	year;			/* Year of publication */
+	char	name[SIZE];		/* Name of the book */
 	char	author[SIZE];		/* Author's name */
 	char	publisher[SIZE];	/* Publisher name */
 }bs_book;
@@ -21,14 +21,15 @@ typedef struct {
  */
 
 typedef struct {
-	bs_book	book_info[MAX_INDEX]; /* All books in the store */
-	int		num_books;			  /* Total number of books in the store */
+	bs_book	book_info[MAX_INDEX];	/* All books in the store */
+	int		num_books;	/* Total number of books in the store */
 }bs_data_node;
 
 bs_data_node		store_data;
 
 /* print all the books from supplied book list */
-void print_book_list(bs_data_node);
+void print_store_data();
+void display_book_info(bs_book);
 
 /* Helpful menu to user */
 void print_menu();

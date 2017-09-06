@@ -14,10 +14,7 @@ Operations to be supported:
 	* Add a book to store
 	* Delete a book from store
 	* Display total number of books in the store
-	* Print sorted books list (Default sort by Name of the book)
-		* Book name
-		* Author
-		* Year of publication
+	* Print store information
 	* Search Book store and list all results
 		* Author
 		* Book Name
