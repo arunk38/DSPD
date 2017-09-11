@@ -23,6 +23,9 @@ int main()
 		break;
 
 	    case 2:		/* Delete given book(name) from store */
+	        delete_book();
+	        break;
+
 	    case 3:		/* Display number of books in the store */
 		print_book_count();
 		break;
@@ -126,4 +129,37 @@ void print_store_data()
 	print_book(store_data.book_info[indx]);
 	indx++;
     }
+}
+
+void delete_book()
+{
+    char name[SIZE];
+    int indx = 0, max_indx = store_data.num_books;
+
+    printf("\nEnter the name of the book to delete:  ");
+    scanf("%s", name);
+
+    while (indx < max_indx) {
+
+        /* Search for given book */
+        if (strcmp(store_data.book_info[indx].name, name) == 0) {
+
+            /* If found copy the last book in store to its place and decrement books count */
+            strcpy(store_data.book_info[indx].name, store_data.book_info[max_indx-1].name);
+            strcpy(store_data.book_info[indx].author, store_data.book_info[max_indx-1].author);
+            strcpy(store_data.book_info[indx].publisher, store_data.book_info[max_indx-1].publisher);
+
+            store_data.book_info[indx].year = store_data.book_info[max_indx-1].year;
+
+            store_data.num_books--;
+
+            printf("\nSucessfully deleted book from store:\n");
+            print_book(store_data.book_info[max_indx-1]);
+            return;
+        }
+        
+        indx++;
+    }
+
+    printf("\nBook with given name not found: %s\n", name);
 }

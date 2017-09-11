@@ -42,3 +42,6 @@ void insert_book(bs_data_node*, bs_book);
 
 /* Add book to store data node*/
 void add_book_to_store();
+
+/* Delete a book from store bata base */
+void delete_book();
