@@ -97,7 +97,7 @@ randomLevel()
  */
 
 void
-ak_sl_insert(
+_ak_sl_insert(
     skiplist        *list,
     int             data)
 {
@@ -159,24 +159,123 @@ ak_sl_insert(
 
 }
 
+void
+ak_sl_insert(
+    skiplist        *list)
+{
+    int cnt = 1, data;
+
+    while (cnt) {
+        printf("\nEnter data to insert: ");
+        scanf("%d", &data);
+        _ak_sl_insert(list, data);
+        printf("\nContinue adding? (1/0) ");
+        scanf("%d", &cnt);
+    }
+}
+
+void
+_ak_sl_delete(
+    skiplist        *list,
+    int             data)
+{
+}
+
+void
+ak_sl_delete(
+    skiplist        *list)
+{
+    int cnt = 1, data;
+
+    while (cnt) {
+        printf("\nEnter data to Delete: ");
+        scanf("%d", &data);
+        _ak_sl_delete(list, data);
+        printf("\nContinue deleting? (1/0) ");
+        scanf("%d", &cnt);
+    }
+}
+
+sl_node *
+_ak_sl_search(
+    skiplist        list,
+    int             data)
+{
+    return NULL;
+}
+
+void
+ak_sl_search(
+    skiplist        list)
+{
+    int data;
+    sl_node *x;
+
+    printf("\nEnter data to search: ");
+    scanf("%d", &data);
+    x = _ak_sl_search(list, data);
+
+    if (x)
+        printf("Element found:\t%d\n", data);
+    else
+        printf("Element not found in skip list:\t%d\n", data);
+
+}
+
+void
+print_info()
+{
+    printf("*****************************************************************\n");
+    printf("*  Supported operation to perform:\t\t\t\t*\n");
+    printf("*\t\t\t\t\t\t\t\t*\n");
+    printf("*    1. Insert Data\t\t\t\t\t\t*\n");
+    printf("*    2. Delete Data\t\t\t\t\t\t*\n");
+    printf("*    3. Print skip list data\t\t\t\t\t*\n");
+    printf("*    4. Search in skip list\t\t\t\t\t*\n");
+    printf("*****************************************************************\n");
+    printf("\nSelect a option to continue: [1-4] ");
+}
+
 int
 main()
 {
     skiplist list;
-    int data, cnt = 1;
+    int data, cnt = 1, choice;
 
     ak_sl_init(&list);
 
     while (cnt) {
-        printf("Enter data to insert: ");
-        scanf("%d", &data);
-        ak_sl_insert(&list, data);
-        ak_sl_print(list);
-        printf("Continue adding? (1/0) ");
+
+        print_info();
+
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+            case 1:
+                ak_sl_insert(&list);
+                break;
+
+            case 2:
+                ak_sl_delete(&list);
+                break;
+
+            case 3:
+                ak_sl_print(list);
+                break;
+
+            case 4:
+                ak_sl_search(list);
+                break;
+
+            default:
+                printf("\nInvalid option, try again?\n");
+                break;
+        }
+
+        printf("\nPress 1 to view menu, 0 to exit (1/0) ");
         scanf("%d", &cnt);
     }
-    ak_sl_print(list);
-
     return 0;
 
 }
