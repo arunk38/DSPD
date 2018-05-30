@@ -10,7 +10,8 @@
 
 typedef struct _node {
     int             data;
-    struct _node    **forward;      // Array to hold pointers to node of different level
+    struct _node    **forward;      // Array to hold pointers
+    				    // to node of different level
 }sl_node;
 
 typedef struct skiplist {
@@ -175,10 +176,53 @@ ak_sl_insert(
 }
 
 void
+sl_node_free(
+	sl_node		*x)
+{
+	if (x) {
+		free(x->forward);
+		free(x);
+		x = NULL;
+	}
+}
+
+int
 _ak_sl_delete(
     skiplist        *list,
     int             data)
 {
+	int i;
+	sl_node *update[SKIPLIST_MAX_LEVEL + 1];
+	sl_node *x = list->header;
+
+	for (i = list->level; i >= 1; i--) {
+		while (x->forward[i] && x->forward[i]->data < data)
+			x = x->forward[i];
+
+		update[i] = x;
+	}
+
+	if (!x->forward[1])
+		return 1;
+
+	x = x->forward[1];
+
+	if (x->data == data) {
+		for (i = 1; i <= list->level; i++) {
+			if (update[i]->forward[i] != x)
+				break;
+			update[i]->forward[i] = x->forward[i];
+		}
+
+		sl_node_free(x);
+
+		while (list->level > 1 && list->header->forward[list->level] == NULL)
+			list->level--;
+
+		return 0;
+	}
+	return 1;
+
 }
 
 void
@@ -190,7 +234,9 @@ ak_sl_delete(
     while (cnt) {
         printf("\nEnter data to Delete: ");
         scanf("%d", &data);
-        _ak_sl_delete(list, data);
+        if (_ak_sl_delete(list, data))
+        	printf("\n%d not found\n", data);
+        ak_sl_print(*list);
         printf("\nContinue deleting? (1/0) ");
         scanf("%d", &cnt);
     }
@@ -217,11 +263,30 @@ ak_sl_search(
             x = x->forward[i];
     }
 
-    if (x->forward[1]->data == data)
+    if (x->forward[1] && x->forward[1]->data == data)
         printf("Element found:\t%d\n", data);
     else
         printf("Element not found in skip list:\t%d\n", data);
 
+}
+
+void
+ak_sl_free(
+	skiplist		*list)
+{
+	if (!list->header->forward[1])
+		return;
+	sl_node *cur_node = list->header->forward[1];
+
+	while (!cur_node) {
+		sl_node *next = cur_node->forward[1];
+		free(cur_node->forward);
+		free(cur_node);
+		cur_node = next;
+	}
+
+	free(cur_node->forward);
+	free(cur_node);
 }
 
 void
@@ -278,6 +343,8 @@ main()
         printf("\nPress 1 to view menu, 0 to exit (1/0) ");
         scanf("%d", &cnt);
     }
+
+    ak_sl_free(&list);
     return 0;
 
 }
