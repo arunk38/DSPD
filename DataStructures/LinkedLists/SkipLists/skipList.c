@@ -196,26 +196,28 @@ ak_sl_delete(
     }
 }
 
-sl_node *
-_ak_sl_search(
-    skiplist        list,
-    int             data)
-{
-    return NULL;
-}
-
 void
 ak_sl_search(
     skiplist        list)
 {
-    int data;
-    sl_node *x;
+    int data, i;
+    sl_node *x = list.header;
 
     printf("\nEnter data to search: ");
     scanf("%d", &data);
-    x = _ak_sl_search(list, data);
 
-    if (x)
+    /*
+     * Traverse a level upto ->data lesser than search data,
+     * move to lower level and proceed. At lowest level ->forward
+     * should contain the search data on success
+     */
+
+    for (i = list.level; i > 0; i--) {
+        while (x->forward[i] && x->forward[i]->data < data)
+            x = x->forward[i];
+    }
+
+    if (x->forward[1]->data == data)
         printf("Element found:\t%d\n", data);
     else
         printf("Element not found in skip list:\t%d\n", data);
