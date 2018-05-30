@@ -32,10 +32,10 @@ ak_sl_print(
 
     printf("\nData in skip list\n\n");
 
-    for (i = 0; i <= level; i++) {
+    for (i = level; i > 0; i--) {
         sl_node *node = list.header->forward[i];
 
-        printf("Level %d:", i);
+        printf("Level %d:", (i - 1));
         while(node != NULL) {
             printf("\t%d\t", node->data);
             node = node->forward[i];
@@ -72,7 +72,7 @@ ak_sl_init(
         header->forward[i] = NULL;
     }
 
-    list->level = 0;
+    list->level = 1;
 
 }
 
@@ -83,7 +83,7 @@ ak_sl_init(
 int
 randomLevel()
 {
-    int lvl = 0;
+    int lvl = 1;
     while (rand() < RAND_MAX / 2 && lvl < SKIPLIST_MAX_LEVEL)
         lvl++;
 
@@ -125,15 +125,25 @@ ak_sl_insert(
         update[i] = x;
     }
 
+    if (x->forward[1] && x->forward[1]->data == data) {
+        return;
+    }
+
+
     /*
      * get level at which new data is to be inserted
      */
 
     level = randomLevel();
 
+    /*
+     * If level is greater than current level,
+     * point update to list header (Head of that level)
+     */
+
     if (level > list->level) {
         for (i = list->level + 1; i <= level; i++) {
-            update[i] = NULL;
+            update[i] = list->header;
         }
         list->level = level;
     }
@@ -161,8 +171,12 @@ main()
         printf("Enter data to insert: ");
         scanf("%d", &data);
         ak_sl_insert(&list, data);
+        ak_sl_print(list);
         printf("Continue adding? (1/0) ");
         scanf("%d", &cnt);
     }
     ak_sl_print(list);
+
+    return 0;
+
 }
