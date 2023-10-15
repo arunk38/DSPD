@@ -17,6 +17,7 @@ package main
  *			- `excl` stores the value of the maximum subsequence sum till i-1 when arr[i-1] is excluded. 
  *			- `incl` stores the value of the maximum subsequence sum till i-1 when arr[i-1] is included.
  *			- The value of `excl` for the current state(say excl_new) will be max(excl ,incl). And the value of `incl` will be updated to excl + arr[i].
+ *			- At the end of the loop max sum will be max(incl, excl)
  */
 
  import (
@@ -34,7 +35,6 @@ func MaxSumWithNoAdjacents(input_arr []int) {
 		incl = excl + float64(i)
 		excl = excl_new
 	}
-
 	fmt.Println("Max sum: ", int(math.Max(incl, excl)))
 }
 
@@ -42,7 +42,7 @@ func main() {
 
 	input_arr1 := []int{5, 5, 10, 100, 10, 5}
 	input_arr2 := []int{1, 2, 3}
-	input_arr3 := []int{1, 20, 3}
+	input_arr3 := []int{1, -20, 3}
 
 	MaxSumWithNoAdjacents(input_arr1)
 	MaxSumWithNoAdjacents(input_arr2)
