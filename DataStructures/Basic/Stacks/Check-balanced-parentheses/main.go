@@ -23,72 +23,12 @@ package main
 
 import (
 	"fmt"
+
+	stack "stack.example.com/implementation/api"
 )
-
-type (
-	Stack struct {
-		top    *node
-		length int
-	}
-	node struct {
-		value rune
-		prev  *node
-	}
-)
-
-// Create a new stack
-func New() *Stack {
-	return &Stack{nil, 0}
-}
-
-// Returns true if stack is empty, else false.
-func (this *Stack) isEmpty() bool {
-	if this.length == 0 {
-		return true
-	}
-	return false
-}
-
-// View the top item on the stack
-func (this *Stack) Peek() rune {
-	if this.length == 0 {
-		return -1
-	}
-	return this.top.value
-}
-
-// Pop the top item of the stack and return it
-func (this *Stack) Pop() rune {
-	if this.length == 0 {
-		return -1
-	}
-
-	n := this.top
-	this.top = n.prev
-	this.length--
-	return n.value
-}
-
-// Push a value onto the top of the stack
-func (this *Stack) Push(value rune) {
-	n := &node{value, this.top}
-	this.top = n
-	this.length++
-}
-
-// Print the contents of current stack
-func (this *Stack) Print() {
-	fmt.Print("[")
-	n := this.top
-	for n != nil {
-		fmt.Print(" ", n.value)
-		n = n.prev
-	}
-	fmt.Print(" ]\n")
-}
 
 func checkBalanced(expr string) {
-	s := New()
+	s := stack.New()
 
 	fmt.Println("\nInput parenthesis: ", expr)
 
@@ -100,7 +40,7 @@ func checkBalanced(expr string) {
 			s.Push('}')
 		} else if char == '[' {
 			s.Push(']')
-		} else if (s.isEmpty() == true) || (s.Pop() != char) {
+		} else if (s.IsEmpty()) || (s.Pop().(rune) != char) {
 			/*
 			 * If current is not opening bracket, and stack is empty or the bracket doesnt match the top of stack -> Unbalanced
 			 */
@@ -110,7 +50,7 @@ func checkBalanced(expr string) {
 		}
 	}
 
-	if s.isEmpty() == true {
+	if s.IsEmpty() {
 		fmt.Println("Balanced")
 	} else {
 		fmt.Println("Not balanced")

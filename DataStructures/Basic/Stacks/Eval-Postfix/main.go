@@ -21,61 +21,9 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	stack "stack.example.com/implementation/api"
 )
-
-type (
-	Stack struct {
-		top    *node
-		length int
-	}
-	node struct {
-		value int
-		prev  *node
-	}
-)
-
-// Create a new stack
-func New() *Stack {
-	return &Stack{nil, 0}
-}
-
-// View the top item on the stack
-func (s *Stack) Peek() int {
-	if s.length == 0 {
-		return -1
-	}
-	return s.top.value
-}
-
-// Pop the top item of the stack and return it
-func (s *Stack) Pop() int {
-	if s.length == 0 {
-		return -1
-	}
-
-	n := s.top
-	s.top = n.prev
-	s.length--
-	return n.value
-}
-
-// Push a value onto the top of the stack
-func (s *Stack) Push(value int) {
-	n := &node{value, s.top}
-	s.top = n
-	s.length++
-}
-
-// Print the contents of current stack
-func (s *Stack) Print() {
-	fmt.Print("[")
-	n := s.top
-	for n != nil {
-		fmt.Print(" ", n.value)
-		n = n.prev
-	}
-	fmt.Print(" ]\n")
-}
 
 func evalPostfix(expression string) {
 	ops := map[string]func(int, int) int{
@@ -86,14 +34,14 @@ func evalPostfix(expression string) {
 	}
 	expr := strings.Split(expression, " ")
 
-	s := New()
+	s := stack.New()
 	fmt.Print("Expression: ", expr)
 	for _, i := range expr {
 		if x, err := strconv.Atoi(i); err == nil {
 			s.Push(x)
 		} else {
-			val1 := s.Pop()
-			val2 := s.Pop()
+			val1 := s.Pop().(int)
+			val2 := s.Pop().(int)
 			s.Push(ops[i](val2, val1))
 		}
 	}
