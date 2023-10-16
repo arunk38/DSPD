@@ -29,18 +29,18 @@ import (
 
 type (
 	Stack struct {
-		top *node
+		top    *node
 		length int
 	}
 	node struct {
 		value rune
-		prev *node
-	}	
+		prev  *node
+	}
 )
 
 // Create a new stack
 func New() *Stack {
-	return &Stack{nil,0}
+	return &Stack{nil, 0}
 }
 
 // Returns true if stack is empty, else false.
@@ -64,7 +64,7 @@ func (this *Stack) Pop() rune {
 	if this.length == 0 {
 		return -1
 	}
-	
+
 	n := this.top
 	this.top = n.prev
 	this.length--
@@ -90,7 +90,7 @@ func (this *Stack) Print() {
 }
 
 func infixToPostfix(expr string) {
-	operator_precedence := map[rune]int{'+':1, '-':1, '*':2, '/':2, '%':2, '^':3}
+	operator_precedence := map[rune]int{'+': 1, '-': 1, '*': 2, '/': 2, '%': 2, '^': 3}
 	s := New()
 
 	fmt.Print("Input expression: ", expr, "\t\t\t\tOutput: ")
@@ -114,15 +114,15 @@ func infixToPostfix(expr string) {
 			 * Push the scanned operator to the stack
 			 */
 
-			 for s.isEmpty() == false && s.Peek() != '(' && operator_precedence[char] <= operator_precedence[rune(s.Peek())] {
+			for s.isEmpty() == false && s.Peek() != '(' && operator_precedence[char] <= operator_precedence[rune(s.Peek())] {
 				fmt.Printf("%c", s.Pop())
-			 }
+			}
 
-			 /*
-			  * If either stack is empty or precedence of scanned opeartor is greater
-			  * than the top of stack, Push it to stack
-			  */
-			  s.Push(char)
+			/*
+			 * If either stack is empty or precedence of scanned opeartor is greater
+			 * than the top of stack, Push it to stack
+			 */
+			s.Push(char)
 		}
 	}
 	// Pop and output from the stack until it is not empty.
