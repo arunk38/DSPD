@@ -1,10 +1,10 @@
 package main
 
 /*
- * Given an array of positive numbers, find the maximum sum of a subsequence with the 
+ * Given an array of positive numbers, find the maximum sum of a subsequence with the
  * constraint that no 2 numbers in the sequence should be adjacent in the array.
  * Example:
- *	Input: arr[] = {5, 5, 10, 100, 10, 5} 
+ *	Input: arr[] = {5, 5, 10, 100, 10, 5}
  *	Output: 110
  *
  * Approach:
@@ -14,15 +14,15 @@ package main
  *		If arr[i] is included then the maximum sum depends on the maximum subsequence sum till (i-1)th element excluding arr[i-1].
  *
  *			- Start with two sums `excl` and `incl`.
- *			- `excl` stores the value of the maximum subsequence sum till i-1 when arr[i-1] is excluded. 
+ *			- `excl` stores the value of the maximum subsequence sum till i-1 when arr[i-1] is excluded.
  *			- `incl` stores the value of the maximum subsequence sum till i-1 when arr[i-1] is included.
  *			- The value of `excl` for the current state(say excl_new) will be max(excl ,incl). And the value of `incl` will be updated to excl + arr[i].
  *			- At the end of the loop max sum will be max(incl, excl)
  */
 
- import (
-    "fmt"
-    "math"
+import (
+	"fmt"
+	"math"
 )
 
 func MaxSumWithNoAdjacents(input_arr []int) {
@@ -31,7 +31,7 @@ func MaxSumWithNoAdjacents(input_arr []int) {
 
 	fmt.Println("\nInput array: ", input_arr)
 	for _, i := range input_arr {
-		excl_new :=  math.Max(incl, excl)
+		excl_new := math.Max(incl, excl)
 		incl = excl + float64(i)
 		excl = excl_new
 	}

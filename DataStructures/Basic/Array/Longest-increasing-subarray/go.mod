@@ -1,3 +1,3 @@
-module demo
+module longestIncreasingSubarray
 
 go 1.20

@@ -8,18 +8,18 @@ import "fmt"
 
 type (
 	Stack struct {
-		top *node
+		top    *node
 		length int
 	}
 	node struct {
 		value interface{}
-		prev *node
-	}	
+		prev  *node
+	}
 )
 
 // Create a new stack
 func New() *Stack {
-	return &Stack{nil,0}
+	return &Stack{nil, 0}
 }
 
 // Returns true if stack is empty, else false.
@@ -43,7 +43,7 @@ func (this *Stack) Pop() interface{} {
 	if this.length == 0 {
 		return nil
 	}
-	
+
 	n := this.top
 	this.top = n.prev
 	this.length--

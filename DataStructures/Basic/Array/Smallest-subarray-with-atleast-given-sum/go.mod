@@ -1,3 +1,3 @@
-module demo
+module smallestSubArray
 
 go 1.20

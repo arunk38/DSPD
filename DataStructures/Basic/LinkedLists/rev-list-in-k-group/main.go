@@ -47,7 +47,7 @@ func (l *List) reverseInGroupSize(k int) {
 		}
 
 		if first_group {
-			l.head = result.head
+			l.head = curr_group.head
 			first_group = false
 		} else {
 			head := l.head

@@ -1,0 +1,15 @@
+go 1.20
+
+use (
+	./DataStructures/Basic/Array/Leaders-in-Array
+	./DataStructures/Basic/Array/Longest-increasing-subarray
+	./DataStructures/Basic/Array/Max-sum-with-no-2-adj-elements
+	./DataStructures/Basic/Array/Smallest-subarray-with-atleast-given-sum
+	./DataStructures/Basic/LinkedLists/Add-2-number-in-list
+	./DataStructures/Basic/LinkedLists/rev-list-in-k-group
+	./DataStructures/Basic/Stacks/Check-balanced-parentheses
+	./DataStructures/Basic/Stacks/Eval-Postfix
+	./DataStructures/Basic/Stacks/Infix-to-Posstfix-conversion
+	./DataStructures/Basic/Stacks/implementation
+	./DataStructures/Basic/String/Check-if-subsequence
+)

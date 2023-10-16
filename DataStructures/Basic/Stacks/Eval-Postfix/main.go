@@ -3,7 +3,7 @@ package main
 /*
  * Evaluate the value of the postfix expression.
  * Example:
- *	Input: 12 3 * 
+ *	Input: 12 3 *
  *	Output: 36 [12 * 3]
  *
  *	Input: 2 3 10 * + 9 -
@@ -18,66 +18,58 @@ package main
  */
 
 import (
-	"strings"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 type (
 	Stack struct {
-		top *node
+		top    *node
 		length int
 	}
 	node struct {
 		value int
-		prev *node
-	}	
+		prev  *node
+	}
 )
 
 // Create a new stack
 func New() *Stack {
-	return &Stack{nil,0}
-}
-
-// Returns true if stack is empty, else false.
-func (this *Stack) isEmpty() bool {
-	if this.length == 0 {
-		return true
-	}
-	return false
+	return &Stack{nil, 0}
 }
 
 // View the top item on the stack
-func (this *Stack) Peek() int {
-	if this.length == 0 {
+func (s *Stack) Peek() int {
+	if s.length == 0 {
 		return -1
 	}
-	return this.top.value
+	return s.top.value
 }
 
 // Pop the top item of the stack and return it
-func (this *Stack) Pop() int {
-	if this.length == 0 {
+func (s *Stack) Pop() int {
+	if s.length == 0 {
 		return -1
 	}
-	
-	n := this.top
-	this.top = n.prev
-	this.length--
+
+	n := s.top
+	s.top = n.prev
+	s.length--
 	return n.value
 }
 
 // Push a value onto the top of the stack
-func (this *Stack) Push(value int) {
-	n := &node{value, this.top}
-	this.top = n
-	this.length++
+func (s *Stack) Push(value int) {
+	n := &node{value, s.top}
+	s.top = n
+	s.length++
 }
 
 // Print the contents of current stack
-func (this *Stack) Print() {
+func (s *Stack) Print() {
 	fmt.Print("[")
-	n := this.top
+	n := s.top
 	for n != nil {
 		fmt.Print(" ", n.value)
 		n = n.prev

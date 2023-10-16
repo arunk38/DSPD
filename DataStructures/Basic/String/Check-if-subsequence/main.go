@@ -15,30 +15,30 @@ package main
  * Approach:
  *		Traverse both strings from one side to other side.
  *		If a matching character found, move ahead in both strings, otherwise move ahead only in str2.
- *		
+ *
  *		Complexity:
  *			- Time: O(n)
  *			- Aux. Space: O(1)
- *		
+ *
  */
 
 import "fmt"
 
 func checkSubsequence(str1 string, str2 string) {
-	fmt.Println("\nInput strings -", "string1 :", str1,  "string2 :", str2)
+	fmt.Println("\nInput strings -", "string1 :", str1, "string2 :", str2)
 
 	n1 := len(str1)
 	n2 := len(str2)
 	var i, j = 0, 0
 
-	for (i < n1 && j < n2) {
+	for i < n1 && j < n2 {
 		if str1[i] == str2[j] {
 			i++
 		}
 		j++
 	}
 
-	fmt.Println(i==n1)
+	fmt.Println(i == n1)
 }
 
 func main() {

@@ -1,3 +1,3 @@
-module demo
+module revListInKGroup
 
 go 1.20
