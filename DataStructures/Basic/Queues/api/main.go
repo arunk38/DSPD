@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	queue "queue.example.com/implementation/api"
+	queue "queue.example.com/api/v1"
 )
 
 func main() {

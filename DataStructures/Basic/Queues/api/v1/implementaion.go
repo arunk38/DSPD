@@ -12,7 +12,7 @@ type (
 		length int
 	}
 	node struct {
-		value int
+		value interface{}
 		next  *node
 	}
 )
@@ -28,15 +28,13 @@ func (q *Queue) IsEmpty() bool {
 }
 
 // Adds an item to the front of queue.
-func (q *Queue) Enqueue(value int) {
+func (q *Queue) Enqueue(value interface{}) {
 	n := &node{value, nil}
 
 	// if queue is empty, add current to front and return
 	if q.front == nil {
 		q.front = n
 		q.length++
-		fmt.Print("enqueueing ", value)
-		q.Print()
 		return
 	}
 
@@ -46,34 +44,33 @@ func (q *Queue) Enqueue(value int) {
 		temp = temp.next
 	}
 	temp.next = n
-	fmt.Print("enqueueing ", value)
-	q.Print()
 	q.length++
 }
 
 // Remove an item to the end of queue.
-func (q *Queue) Dequeue() int {
+func (q *Queue) Dequeue() interface{} {
 	if q.IsEmpty() {
-		return -1
+		return nil
 	}
 
 	ele := q.front.value
 	q.front = q.front.next
+	q.length--
 
 	return ele
 }
 
-func (q *Queue) FrontEle() int {
+func (q *Queue) FrontEle() interface{} {
 	if q.IsEmpty() {
-		return -1
+		return nil
 	}
 
 	return q.front.value
 }
 
-func (q *Queue) RearEle() int {
+func (q *Queue) RearEle() interface{} {
 	if q.IsEmpty() {
-		return -1
+		return nil
 	}
 
 	temp := q.front
@@ -85,7 +82,7 @@ func (q *Queue) RearEle() int {
 }
 
 func (q *Queue) Print() {
-	fmt.Print("   Queue curren state ---> [")
+	fmt.Print("   Queue current state ---> [")
 	n := q.front
 
 	for n != nil {

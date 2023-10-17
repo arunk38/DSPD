@@ -24,7 +24,7 @@ package main
 import (
 	"fmt"
 
-	stack "stack.example.com/implementation/api"
+	stack "stack.example.com/api/v1"
 )
 
 func checkBalanced(expr string) {

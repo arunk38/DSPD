@@ -9,5 +9,6 @@ use (
 	./DataStructures/Basic/LinkedLists/rev-list-in-k-group
 	./DataStructures/Basic/Queues
 	./DataStructures/Basic/Stacks
+	./DataStructures/Basic/Trees
 	./DataStructures/Basic/String/Check-if-subsequence
 )
