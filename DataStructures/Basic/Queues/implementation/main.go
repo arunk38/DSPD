@@ -15,7 +15,7 @@ func main() {
 
 	q.Print()
 	fmt.Println("Front element in queue: ", q.FrontEle())
-	fmt.Println("Front element in queue: ", q.RearEle())
+	fmt.Println("Rear element in queue: ", q.RearEle())
 	fmt.Println("Dequeue the first element: ", q.Dequeue())
 	q.Print()
 	fmt.Println("Is queue empty? ", q.IsEmpty())
