@@ -42,4 +42,6 @@ func main() {
 	fmt.Println("Number of nodes in tree: ", bt.Size())
 	fmt.Println("Height of the tree: ", bt.Height())
 	fmt.Println("Maximum element of the tree: ", bt.Maximum())
+
+	fmt.Println("Is my tree BST? : ", bt.IsBST())
 }

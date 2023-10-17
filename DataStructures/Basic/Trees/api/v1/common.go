@@ -1,4 +1,8 @@
-package api
+package v1
+
+/*
+ * Common tree structs and APIs
+ */
 
 import (
 	"fmt"
@@ -8,10 +12,13 @@ import (
 )
 
 type (
+	// Tree data structure
 	Tree struct {
 		root   *node
 		length int
 	}
+
+	// node type in Tree data type
 	node struct {
 		value interface{}
 		left  *node
@@ -134,12 +141,12 @@ func (t *Tree) Maximum() int {
 // Insert in a binary tree
 func (t *Tree) Insert(val interface{}) {
 	if t.length == 0 {
-		t.root = &node{val, nil, nil}
+		t.root = makeNode(val)
 		t.length++
 		return
 	}
 
-	n := &node{val, nil, nil}
+	n := makeNode(val)
 
 	q := queue.New()
 	q.Enqueue(t.root)
@@ -167,4 +174,8 @@ func (t *Tree) Insert(val interface{}) {
 
 func (t *Tree) PrintRootValue() {
 	fmt.Println("Root value of tree is : ", t.root.value)
+}
+
+func makeNode(val interface{}) *node {
+	return &node{val, nil, nil}
 }
