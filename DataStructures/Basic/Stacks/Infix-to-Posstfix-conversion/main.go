@@ -25,73 +25,13 @@ package main
 
 import (
 	"fmt"
+
+	stack "stack.example.com/api/v1"
 )
-
-type (
-	Stack struct {
-		top    *node
-		length int
-	}
-	node struct {
-		value rune
-		prev  *node
-	}
-)
-
-// Create a new stack
-func New() *Stack {
-	return &Stack{nil, 0}
-}
-
-// Returns true if stack is empty, else false.
-func (this *Stack) isEmpty() bool {
-	if this.length == 0 {
-		return true
-	}
-	return false
-}
-
-// View the top item on the stack
-func (this *Stack) Peek() rune {
-	if this.length == 0 {
-		return -1
-	}
-	return this.top.value
-}
-
-// Pop the top item of the stack and return it
-func (this *Stack) Pop() rune {
-	if this.length == 0 {
-		return -1
-	}
-
-	n := this.top
-	this.top = n.prev
-	this.length--
-	return n.value
-}
-
-// Push a value onto the top of the stack
-func (this *Stack) Push(value rune) {
-	n := &node{value, this.top}
-	this.top = n
-	this.length++
-}
-
-// Print the contents of current stack
-func (this *Stack) Print() {
-	fmt.Print("[")
-	n := this.top
-	for n != nil {
-		fmt.Print(" ", n.value)
-		n = n.prev
-	}
-	fmt.Print(" ]\n")
-}
 
 func infixToPostfix(expr string) {
 	operator_precedence := map[rune]int{'+': 1, '-': 1, '*': 2, '/': 2, '%': 2, '^': 3}
-	s := New()
+	s := stack.New()
 
 	fmt.Print("Input expression: ", expr, "\t\t\t\tOutput: ")
 	for _, char := range expr {
@@ -103,7 +43,7 @@ func infixToPostfix(expr string) {
 			s.Push(char)
 		} else if char == ')' {
 			// If the scanned character is an ‘)’, pop and output from the stack until an ‘(‘ is encountered.
-			for s.isEmpty() == false && s.Peek() != '(' {
+			for !s.IsEmpty() && s.Peek() != '(' {
 				fmt.Printf("%c", s.Pop())
 			}
 			s.Pop()
@@ -114,7 +54,7 @@ func infixToPostfix(expr string) {
 			 * Push the scanned operator to the stack
 			 */
 
-			for s.isEmpty() == false && s.Peek() != '(' && operator_precedence[char] <= operator_precedence[rune(s.Peek())] {
+			for !s.IsEmpty() && s.Peek() != '(' && operator_precedence[char] <= operator_precedence[s.Peek().(rune)] {
 				fmt.Printf("%c", s.Pop())
 			}
 
@@ -126,7 +66,7 @@ func infixToPostfix(expr string) {
 		}
 	}
 	// Pop and output from the stack until it is not empty.
-	for s.isEmpty() == false {
+	for !s.IsEmpty() {
 		fmt.Printf("%c", s.Pop())
 	}
 	fmt.Println()

@@ -1,12 +1,12 @@
 package main
 
 /*
- * Given an array of integers and a number x, find the smallest subarray with a sum greater than the given value. 
+ * Given an array of integers and a number x, find the smallest subarray with a sum greater than the given value.
  * Example:
  *	Input:
  *		arr[] = {1, 4, 45, 6, 0, 19}
  *		x  =  51
- *	Output: 
+ *	Output:
  *		sub array length: 3
  *		Minimum length subarray is {4, 45, 6}
  *
@@ -18,7 +18,7 @@ package main
  *				- remove the element at start index
  *			Complexity:
  *				- Time: O(n)
- *		
+ *
  */
 
 import (
@@ -48,7 +48,7 @@ func minSubArrayLen(target int, nums []int) int {
 	}
 
 	// min value is not changed, finding sub array is not possible
-	if min == len(nums) + 1{
+	if min == len(nums)+1 {
 		return 0
 	}
 
@@ -67,7 +67,7 @@ func main() {
 		fmt.Println("Sub array length: ", res)
 	}
 
-	input_arr = []int{ 1, 10, 5, 2, 7 }
+	input_arr = []int{1, 10, 5, 2, 7}
 	X = 9
 	fmt.Println("\nArray: ", input_arr, "Sum value: ", X)
 	res = minSubArrayLen(X, input_arr)

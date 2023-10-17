@@ -27,7 +27,7 @@ func longestIncreasingSubarray(arr []int) {
 	n := len(arr)
 
 	for i := 1; i < n; i++ {
-		if arr[i] > arr[i - 1] {
+		if arr[i] > arr[i-1] {
 			curen_len += 1
 		} else {
 			if curen_len > max {
@@ -51,6 +51,6 @@ func main() {
 	input_arr := []int{5, 6, 3, 5, 7, 8, 9, 1, 2}
 	longestIncreasingSubarray(input_arr)
 
-	input_arr = []int{12, 13, 1, 5, 4, 7, 18, 10, 10, 11} 
+	input_arr = []int{12, 13, 1, 5, 4, 7, 18, 10, 10, 11}
 	longestIncreasingSubarray(input_arr)
 }

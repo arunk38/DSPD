@@ -66,7 +66,7 @@ func convToInt(head *Node, idx int) int {
 		return idx * head.info
 	}
 
-	return idx * head.info + convToInt(head.next, idx * 10)
+	return idx*head.info + convToInt(head.next, idx*10)
 }
 
 func (l *List) add(num *List) {
@@ -75,7 +75,7 @@ func (l *List) add(num *List) {
 	carry := 0
 	result := List{}
 
-	for (temp1 != nil  || temp2 != nil ) {
+	for temp1 != nil || temp2 != nil {
 		sum := carry
 
 		if temp1 != nil {
