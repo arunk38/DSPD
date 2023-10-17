@@ -168,7 +168,3 @@ func (t *Tree) Insert(val interface{}) {
 func (t *Tree) PrintRootValue() {
 	fmt.Println("Root value of tree is : ", t.root.value)
 }
-
-func (t *Tree) Length() int {
-	return t.length
-}
