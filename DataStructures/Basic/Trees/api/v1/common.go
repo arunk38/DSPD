@@ -125,17 +125,21 @@ func (t *Tree) Height() int {
 	return height(t.root)
 }
 
-func maximum(n *node) int {
+func maximumInt(n *node) int {
 	if n == nil {
 		return -1
 	}
 
-	return int(math.Max((float64(n.value.(int))), math.Max(float64(maximum(n.left)), float64(maximum(n.right)))))
+	return int(math.Max((float64(GetValueInt(n))), math.Max(float64(maximumInt(n.left)), float64(maximumInt(n.right)))))
 }
 
 // Returns the max value stored in the tree
-func (t *Tree) Maximum() int {
-	return maximum(t.root)
+func (t *Tree) Maximum() interface{} {
+	switch t.root.value.(type) {
+	case int:
+		return maximumInt(t.root)
+	}
+	return nil
 }
 
 // Insert in a binary tree
@@ -178,4 +182,8 @@ func (t *Tree) PrintRootValue() {
 
 func makeNode(val interface{}) *node {
 	return &node{val, nil, nil}
+}
+
+func GetValueInt(n *node) int {
+	return n.value.(int)
 }
