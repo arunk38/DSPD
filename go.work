@@ -11,4 +11,5 @@ use (
 	./DataStructures/Basic/Stacks
 	./DataStructures/Basic/Trees
 	./DataStructures/Basic/String/Check-if-subsequence
+	./DataStructures/Basic/Heaps
 )

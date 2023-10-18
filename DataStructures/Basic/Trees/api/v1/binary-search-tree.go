@@ -6,11 +6,11 @@ package v1
 
 import "math"
 
-func searchBSTInt(root *node, val int) bool {
+func searchBSTInt(root *node, val int) (bool, interface{}) {
 	if root == nil {
-		return false
+		return false, nil
 	} else if GetValueInt(root) == val {
-		return true
+		return true, root
 	} else if val <= GetValueInt(root) {
 		return searchBSTInt(root.left, val)
 	} else {
@@ -18,14 +18,13 @@ func searchBSTInt(root *node, val int) bool {
 	}
 }
 
-func (t *Tree) SearchBST(val interface{}) bool {
-
+func (t *Tree) SearchBST(val interface{}) (bool, interface{}) {
 	switch v := val.(type) {
 	case int:
 		return searchBSTInt(t.root, v)
 	}
 
-	return false
+	return false, nil
 }
 
 func insertBSTInt(root *node, data *node) *node {

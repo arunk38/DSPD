@@ -184,6 +184,28 @@ func makeNode(val interface{}) *node {
 	return &node{val, nil, nil}
 }
 
-func GetValueInt(n *node) int {
-	return n.value.(int)
+func GetValueInt(n interface{}) int {
+	return n.(*node).value.(int)
+}
+
+func GetLeftNode(n interface{}) interface{} {
+	if n.(*node).left == nil {
+		return nil
+	}
+	return n.(*node).left
+}
+
+func GetRightNode(n interface{}) interface{} {
+	if n.(*node).right == nil {
+		return nil
+	}
+	return n.(*node).right
+}
+
+func (t *Tree) GetRoot() *node {
+	return t.root
+}
+
+func MinNode(n interface{}) interface{} {
+	return minNode(n.(*node))
 }
