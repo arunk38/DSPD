@@ -176,6 +176,20 @@ func (t *Tree) Insert(val interface{}) {
 
 }
 
+func isCompleteBTree(n *node, i int, length int) bool {
+	if n == nil {
+		return true
+	}
+	if i >= length {
+		return false
+	}
+	return (isCompleteBTree(n.left, 2*i+1, length) && isCompleteBTree(n.right, 2*i+2, length))
+}
+
+func (t *Tree) IsCompleteBTree() bool {
+	return isCompleteBTree(t.root, 0, t.length)
+}
+
 func (t *Tree) PrintRootValue() {
 	fmt.Println("Root value of tree is : ", t.root.value)
 }

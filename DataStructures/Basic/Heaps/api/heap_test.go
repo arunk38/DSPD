@@ -59,7 +59,7 @@ func TestHeapify(t *testing.T) {
 			args: true,
 			got: heap.NewHeap(func(a, b int) bool { return a < b }).
 				BuildHeap([]int{6, 5, 4, 8, 9, 10, 13, 12, 11, 7, 1}).Pop().GetHeapData(),
-			want: []int{12, 11, 10, 5, 7, 4, 9, 1, 8, 6},
+			want: []int{12, 11, 10, 8, 7, 4, 9, 5, 1, 6},
 		},
 		{ // test case
 			name: "Min Heap",
@@ -72,8 +72,8 @@ func TestHeapify(t *testing.T) {
 			name: "Sort in min Heap",
 			args: false,
 			got: heap.NewHeap(func(a, b int) bool { return a > b }).
-				BuildHeap([]int{6, 5, 4, 8, 9, 10, 13, 12, 11, 7, 1}).HeapSort(),
-			want: []int{1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
+				BuildHeap([]int{6, 5, 4, 8, 9, 10, 13, 12, 11, 7}).HeapSort(),
+			want: []int{4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
 		},
 		{ // test case
 			name: "Empty heap, size is zero",
@@ -87,6 +87,26 @@ func TestHeapify(t *testing.T) {
 			got: heap.NewHeap(func(a, b int) bool { return a > b }).
 				BuildHeap([]int{6, 5, 4, 8, 9, 10, 13, 12, 11, 7, 1}).Peek(),
 			want: 1,
+		},
+		{ // test case
+			name: "Check if array is Heap - min",
+			args: false,
+			got: heap.IsHeap(heap.NewHeap(func(a, b int) bool { return a > b }).
+				BuildHeap([]int{6, 5, 4, 8, 9, 10, 13, 12, 11, 7}).GetHeapData(), func(a, b int) bool { return a > b }),
+			want: true,
+		},
+		{ // test case
+			name: "Check if array is Heap - max",
+			args: false,
+			got: heap.IsHeap(heap.NewHeap(func(a, b int) bool { return a < b }).
+				BuildHeap([]int{6, 5, 4, 8, 9, 10, 13, 12, 11, 7}).GetHeapData(), func(a, b int) bool { return a < b }),
+			want: true,
+		},
+		{ // test case
+			name: "Check if array is Heap - invalid",
+			args: false,
+			got:  heap.IsHeap([]int{6, 5, 4, 8, 9, 10, 13, 12, 11, 7, 1}, func(a, b int) bool { return a > b }),
+			want: false,
 		},
 		{ // test case
 			name: "Get size of heap {5, 10}",

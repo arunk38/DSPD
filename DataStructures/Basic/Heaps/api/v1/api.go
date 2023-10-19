@@ -43,8 +43,8 @@ func (h *Heap[T]) Pop() *Heap[T] {
 // might fail comparition thus violating the heap property
 func (h *Heap[T]) heapifyDown(idx int) {
 
-	leftChild := childIdx(idx)
-	rightChild := childIdx(idx)
+	leftChild := leftChildIdx(idx)
+	rightChild := rightChildIdx(idx)
 
 	largest := idx
 
@@ -124,6 +124,26 @@ func (h *Heap[T]) HeapSort() []T {
 	return sortedData
 }
 
+func isHeap[T any](input []T, comp func(a, b T) bool, i int, n int) bool {
+
+	// If (2 * i) + 1 >= n, then leaf node, so return true
+	if i >= int((n-1)/2) {
+		return true
+	}
+
+	// comparision should be done in reverse to what is done in heapify
+	if comp(input[leftChildIdx(i)], input[i]) && comp(input[rightChildIdx(i)], input[i]) &&
+		isHeap(input, comp, leftChildIdx(i), n) && isHeap(input, comp, rightChildIdx(i), n) {
+		return true
+	}
+	return false
+}
+
+// check if the gven array input satisfies heap
+func IsHeap[T any](input []T, comp func(a, b T) bool) bool {
+	return isHeap(input, comp, 0, len(input))
+}
+
 // swap swaps the values at indices i and j
 func (h *Heap[T]) swap(i, j int) {
 	h.data[i], h.data[j] = h.data[j], h.data[i]
@@ -134,9 +154,14 @@ func (h *Heap[T]) Peek() T {
 	return h.data[0]
 }
 
-// return the child index of the current heap element
-func childIdx(i int) int {
+// return the left child index of the current heap element
+func leftChildIdx(i int) int {
 	return 2*i + 1
+}
+
+// return the right child index of the current heap element
+func rightChildIdx(i int) int {
+	return 2*i + 2
 }
 
 // return the parent element index for current element
