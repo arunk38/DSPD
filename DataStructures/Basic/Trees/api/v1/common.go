@@ -15,20 +15,6 @@ func New() *Tree {
 	return &Tree{nil, 0}
 }
 
-func isNodeNil(n any) bool {
-	switch n.(type) {
-	case *node:
-		if n.(*node) == nil {
-			return true
-		}
-	case *avlNode:
-		if n.(*avlNode) == nil {
-			return true
-		}
-	}
-	return false
-}
-
 func printInOrder(node *node) {
 	if node != nil {
 		printInOrder(node.left)

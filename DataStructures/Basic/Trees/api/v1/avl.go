@@ -1,5 +1,7 @@
 package v1
 
+import "fmt"
+
 /*
  * functionalities related to binary search tree
  */
@@ -11,11 +13,11 @@ func NewAVL() *AvlTree {
 
 // Create and a AVL type node with height set to 1
 func makeAVLNode(key any, val any) *avlNode {
-	return &avlNode{key, val, 0, nil, nil}
+	return &avlNode{key, val, 1, nil, nil}
 }
 
 // return hieght stored in given avl node
-func (node *avlNode) getAVLNodeHeight() int {
+func (node *avlNode) GetAVLNodeHeight() int {
 	if node == nil {
 		return 0
 	}
@@ -56,7 +58,7 @@ func (n *avlNode) updateHeight() {
 
 func (n *avlNode) balanceFactor() int {
 	// calculate balance factor
-	left, right := -1, -1
+	left, right := 0, 0
 	if n.left != nil {
 		left = n.left.height
 	}
@@ -134,7 +136,7 @@ func (t *AvlTree) InsertAVL(key any, val any) *AvlTree {
 }
 
 func BulkInsertAVL(t *AvlTree, val []any, key []any) *AvlTree {
-	for i, _ := range val {
+	for i := range val {
 		t.InsertAVL(key[i], val[i])
 	}
 
@@ -177,9 +179,105 @@ func (t *AvlTree) AVLGetRoot() *avlNode {
 }
 
 func GetNodeValue(n *avlNode) any {
+	if n == nil {
+		return "<nil>"
+	}
 	return n.value
 }
 
 func GetNodeKey(n *avlNode) any {
+	if n == nil {
+		return "<nil>"
+	}
 	return n.key
+}
+
+// Search a given key in avl Tree
+func (t *AvlTree) Search(key any) *avlNode {
+	rootNode := t.root
+	for current := rootNode; current != nil; {
+		if isLessThan(key, current.key) {
+			current = current.left
+		} else if isGreaterThan(key, current.key) {
+			current = current.right
+		} else {
+			return current
+		}
+	}
+	// if not found
+	return nil
+}
+
+func (n *avlNode) delete(key any) *avlNode {
+	if n == nil {
+		return nil
+	}
+
+	if isLessThan(key, n.key) {
+		n.left = n.left.delete(key)
+	} else if isGreaterThan(key, n.key) {
+		n.right = n.right.delete(key)
+	} else {
+		if n.right != nil {
+			// swap current key with minimum from right (next highest) and delete leaf node
+			successor := n.right
+			for successor.left != nil {
+				successor = successor.left
+			}
+			n.key = successor.key
+			n.value = successor.value
+			n.right = n.right.delete(successor.key)
+		} else if n.left != nil {
+			// node with only left child
+			n = n.left
+		} else {
+			// node has no children
+			n = nil
+			return n
+		}
+	}
+	if n != nil {
+		n.updateHeight()
+		n = n.rebalance()
+	}
+	return n
+}
+
+func (t *AvlTree) Delete(key any) *AvlTree {
+	t.root = t.root.delete(key)
+	return t
+}
+
+func printNodeInfo(node *avlNode) {
+	fmt.Printf("[  (k, v, h) = (%d, %s, %d) left key = ", node.key.(int), node.value.(string), node.height)
+
+	if node.left != nil {
+		fmt.Print(" ", node.left.key.(int))
+	} else {
+		fmt.Print("<nil> ")
+	}
+	fmt.Print(" Right Key = ")
+	if node.right != nil {
+		fmt.Print(" ", node.right.key.(int))
+	} else {
+		fmt.Print("<nil>")
+	}
+	fmt.Println("]")
+}
+
+func printUtil(node *avlNode) {
+	if node == nil {
+		return
+	}
+	printNodeInfo(node)
+	printUtil(node.left)
+	printUtil(node.right)
+
+}
+
+func (t *AvlTree) PrintAVL() int {
+	fmt.Print("\n************	START	************\n\n")
+	printUtil(t.root)
+	fmt.Print("\n************	xENDx	************\n\n")
+	return 0
 }
