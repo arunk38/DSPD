@@ -11,23 +11,22 @@ import (
 	queue "queue.example.com/api/v1"
 )
 
-type (
-	// Tree data structure
-	Tree struct {
-		root   *node
-		length int
-	}
-
-	// node type in Tree data type
-	node struct {
-		value interface{}
-		left  *node
-		right *node
-	}
-)
-
 func New() *Tree {
 	return &Tree{nil, 0}
+}
+
+func isNodeNil(n any) bool {
+	switch n.(type) {
+	case *node:
+		if n.(*node) == nil {
+			return true
+		}
+	case *avlNode:
+		if n.(*avlNode) == nil {
+			return true
+		}
+	}
+	return false
 }
 
 func printInOrder(node *node) {

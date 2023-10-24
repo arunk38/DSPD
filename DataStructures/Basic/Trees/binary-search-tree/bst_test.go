@@ -139,6 +139,13 @@ func TestBasic(t *testing.T) {
 	bst.DeleteNodeBST(8)
 	bst.PrintInOrder()
 	bst.PrintRootValue()
+
+	data = []int{2, 1, 3, 4, 6, 5}
+	bst1 := tree.New()
+	for _, i := range data {
+		bst1.InsertBST(i)
+	}
+	bst1.PrintInOrder()
 }
 
 // Inorder Successor of an input node can also be defined as the node with the smallest key greater than the key of input node.
