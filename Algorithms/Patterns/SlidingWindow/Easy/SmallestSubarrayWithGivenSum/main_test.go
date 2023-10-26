@@ -11,16 +11,9 @@ import (
 	"math"
 	"testing"
 
+	algos "algos.example.com/api/v1"
 	"github.com/stretchr/testify/assert"
 )
-
-func getMin(a, b int) int {
-	if a < b {
-		return a
-	}
-
-	return b
-}
 
 func SmallestSubArray(arr []int, S int) int {
 
@@ -33,9 +26,9 @@ func SmallestSubArray(arr []int, S int) int {
 
 		// shrink the window as small as possible until is windowSum in greater
 		for windowSum >= S { // current window sum is greater than given value
-			arrayLength = getMin(arrayLength, windowEnd-windowStart+1) // get the minimum sub array
-			windowSum -= arr[windowStart]                              // substract the element going out
-			windowStart++                                              // slide the windoe start
+			arrayLength = algos.GetMin(arrayLength, windowEnd-windowStart+1) // get the minimum sub array
+			windowSum -= arr[windowStart]                                    // substract the element going out
+			windowStart++                                                    // slide the windoe start
 		}
 	}
 

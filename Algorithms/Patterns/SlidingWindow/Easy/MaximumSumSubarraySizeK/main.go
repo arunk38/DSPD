@@ -4,15 +4,11 @@ package main
  * Given an array of positive numbers and a positive number ‘k’, find the maximum sum of any contiguous subarray of size ‘k’.
  */
 
-import "fmt"
+import (
+	"fmt"
 
-func getMax(a, b int) int {
-	if a > b {
-		return a
-	}
-
-	return b
-}
+	algos "algos.example.com/api/v1"
+)
 
 func maximumSumSubarraySizeK(arr []int, k int) int {
 
@@ -25,9 +21,9 @@ func maximumSumSubarraySizeK(arr []int, k int) int {
 
 		// slide the window once we reach the end of first window
 		if windowEnd >= (k - 1) {
-			maxSum = getMax(windowSum, maxSum) // calculate the max sum
-			windowSum -= arr[windowStart]      // substract the element going out
-			windowStart++                      // slide the windoe start
+			maxSum = algos.GetMax(windowSum, maxSum) // calculate the max sum
+			windowSum -= arr[windowStart]            // substract the element going out
+			windowStart++                            // slide the windoe start
 		}
 	}
 
