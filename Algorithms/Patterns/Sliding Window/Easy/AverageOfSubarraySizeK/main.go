@@ -1,5 +1,9 @@
 package main
 
+/*
+ * Given an array, find the average of all contiguous subarrays of size ‘K’ in it.
+ */
+
 import "fmt"
 
 func averageOfSubarraySizeK(arr []int, k int) []float64 {

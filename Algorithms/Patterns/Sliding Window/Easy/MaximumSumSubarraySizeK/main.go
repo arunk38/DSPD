@@ -1,5 +1,9 @@
 package main
 
+/*
+ * Given an array of positive numbers and a positive number ‘k’, find the maximum sum of any contiguous subarray of size ‘k’.
+ */
+
 import "fmt"
 
 func getMax(a, b int) int {
