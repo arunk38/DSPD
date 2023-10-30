@@ -32,5 +32,6 @@ func pairWithTargetSum(intput []int, targetSum int) {
 
 func main() {
 	pairWithTargetSum([]int{1, 2, 3, 4, 6}, 6)
-	pairWithTargetSum([]int{2, 5, 9, 11}, 11)	
+	pairWithTargetSum([]int{2, 5, 9, 11}, 11)
+	pairWithTargetSum([]int{2, 5, 9, 11}, 30)	
 }
