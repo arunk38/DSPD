@@ -44,6 +44,13 @@ func (this *LRUCache) remove(node *Node) {
 	node.Next.Prev = node.Prev
 }
 
+//	. -> head <=======================.
+//	|                                ||(n)
+//
+// (n)|				N1 <==>	N2 <==>	 N3
+//
+//	|             ||
+//	. - tail <====.
 func (this *LRUCache) insert(node *Node) {
 	this.mapPointer[node.Key] = node
 	next := this.Head.Next
@@ -55,6 +62,7 @@ func (this *LRUCache) insert(node *Node) {
 
 func (this *LRUCache) Get(key int) int {
 	if n, ok := this.mapPointer[key]; ok {
+		// cache value is being read, remove and add to front as recently used
 		this.remove(n)
 		this.insert(n)
 		return n.Value
@@ -64,14 +72,17 @@ func (this *LRUCache) Get(key int) int {
 }
 
 func (this *LRUCache) Put(key int, value int) {
+	// If [key, value] is already present in cache, remove to insert again
 	if _, ok := this.mapPointer[key]; ok {
 		this.remove(this.mapPointer[key])
 	}
 
+	// cache is full, remove from tail
 	if len(this.mapPointer) == this.cacheCap {
 		this.remove(this.Tail.Prev)
 	}
 
+	// Insert at head, as this is recently accessed
 	this.insert(newNode(key, value))
 }
 
