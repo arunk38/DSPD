@@ -31,7 +31,7 @@ func dutchFlag(input []int) []int {
 	return input
 }
 
-func TestLongestSubstringKDistinct(t *testing.T) {
+func TestDutchFlag(t *testing.T) {
 
 	type args struct {
 		arg1 []int
