@@ -1,7 +1,7 @@
 go 1.20
 
 use (
-	"./Algorithms/Patterns/SlidingWindow"
+	"./Algorithms/Patterns/1.SlidingWindow"
 	./Algorithms
 	./DataStructures/Basic/Array/Leaders-in-Array
 	./DataStructures/Basic/Array/Longest-increasing-subarray
