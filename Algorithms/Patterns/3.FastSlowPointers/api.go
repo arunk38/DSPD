@@ -11,6 +11,17 @@ type List struct {
 	head *Node
 }
 
+func (l *List) convertToArray() []int {
+	ret := []int{}
+	temp := l.head
+
+	for temp != nil {
+		ret = append(ret, temp.info)
+		temp = temp.next
+	}
+	return ret
+}
+
 func printList(l *List) {
 	p := l.head
 	for p != nil {
