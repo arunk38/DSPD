@@ -6,44 +6,34 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func intersect(arr [][]int, newInterval []int) [][]int {
-	if len(arr) < 2 {
-		return arr
+func intersect(arr1 [][]int, arr2 [][]int) [][]int {
+
+	result := [][]int{}
+	i, j := 0, 0
+	for i < len(arr1) && j < len(arr2) {
+		// check if interval arr1[i] intersects with arr2[j]
+		// check if one of the interval start time lies with in another
+		if (arr1[i][0] >= arr2[j][0] && arr1[i][0] <= arr2[j][1]) ||
+			(arr2[j][0] >= arr1[i][0] && arr2[j][0] <= arr1[i][1]) {
+			// store the intersection part
+			result = append(result, []int{max(arr1[i][0], arr2[j][0]), min(arr1[i][1], arr2[j][1])})
+		}
+
+		// move from interval which is finishing first
+		if arr1[i][1] < arr2[j][1] {
+			i++
+		} else {
+			j++
+		}
 	}
-
-	mergedIntervals := [][]int{}
-
-	i := 0
-	// skip all intervals that come before new interval
-	for i < len(arr) && arr[i][1] < newInterval[0] {
-		mergedIntervals = append(mergedIntervals, arr[i])
-		i++
-	}
-
-	// merge all intervals that overlap with new interval
-	for i < len(arr) && arr[i][0] <= newInterval[1] {
-		newInterval[0] = min(arr[i][0], newInterval[0])
-		newInterval[1] = max(arr[i][1], newInterval[1])
-		i++
-	}
-
-	// insert the interval
-	mergedIntervals = append(mergedIntervals, newInterval)
-
-	// intert the remaining intervals
-	for i < len(arr) {
-		mergedIntervals = append(mergedIntervals, arr[i])
-		i++
-	}
-
-	return mergedIntervals
+	return result
 }
 
 func TestIntervalIntersect(t *testing.T) {
 
 	type args struct {
 		arg1 [][]int
-		arg2 []int
+		arg2 [][]int
 	}
 
 	tests := []struct {
@@ -52,19 +42,14 @@ func TestIntervalIntersect(t *testing.T) {
 		want [][]int
 	}{
 		{
-			name: "Intervals=[[1,3], [5,7], [8,12]], New Interval=[4,6]",
-			args: args{[][]int{{1, 3}, {5, 7}, {8, 12}}, []int{4, 6}},
-			want: [][]int{{1, 3}, {4, 7}, {8, 12}},
+			name: "arr1=[[1, 3], [5, 6], [7, 9]], arr2=[[2, 3], [5, 7]]",
+			args: args{[][]int{{1, 3}, {5, 6}, {7, 9}}, [][]int{{2, 3}, {5, 7}}},
+			want: [][]int{{2, 3}, {5, 6}, {7, 7}},
 		},
 		{
-			name: "Intervals=[[1,3], [5,7], [8,12]], New Interval=[4,10]",
-			args: args{[][]int{{1, 3}, {5, 7}, {8, 12}}, []int{4, 10}},
-			want: [][]int{{1, 3}, {4, 12}},
-		},
-		{
-			name: "Intervals=[[2,3],[5,7]], New Interval=[1,4]",
-			args: args{[][]int{{2, 3}, {5, 7}}, []int{1, 4}},
-			want: [][]int{{1, 4}, {5, 7}},
+			name: "arr1=[[1, 3], [5, 7], [9, 12]], arr2=[[5, 10]]",
+			args: args{[][]int{{1, 3}, {5, 7}, {9, 12}}, [][]int{{5, 10}}},
+			want: [][]int{{5, 7}, {9, 10}},
 		},
 	}
 
